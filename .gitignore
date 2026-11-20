@@ -219,3 +219,4 @@ darkpyonix/manager/target/
 vibemap/data/raw.json
 vibemap/data/raw_summary.md
 vibemap/out/
+vibemap/data/_patch.json
