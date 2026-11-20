@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "project": {
+    "name": "darkpyonix (core)",
+    "summary": "파일 하나에 커널 하나가 붙는 Python 노트북 실행 환경. 표준 라이브러리 커널, 버려도 되는 Rust 매니저·CLI, darkpyonix.dev 허브(Cloudflare Worker).",
+    "structure": "layer",
+    "commit": "253de56",
+    "updated": "2026-11-20",
+    "how_to_run": [
+      { "label": "노트북 실행", "cmd": "darkpyonix run file.py" },
+      { "label": "커널만 직접", "cmd": "python -m darkpyonix --file file.py" },
+      { "label": "매니저", "cmd": "darkpyonix manager [--ephemeral]" },
+      { "label": "Python 테스트", "cmd": "pytest" },
+      { "label": "Rust 테스트 (builder 서브에이전트만, CARGO_BUILD_JOBS=2)", "cmd": "cd darkpyonix/manager && cargo test" },
+      { "label": "허브 테스트", "cmd": "cd darkpyonix/hub/worker && npm test" }
+    ]
+  },
+  "layers": [
+    { "id": "front", "name": "사용자 접점", "desc": "사람·에이전트·노트북 코드가 직접 부르는 곳: CLI, 허브 API, 런타임 API", "modules": ["cli", "hub", "kernel.runtime"] },
+    { "id": "manager", "name": "매니저", "desc": "커널 앞의 버려도 되는 HTTP 앞단. 인증 후 커널에 넘김", "modules": ["manager.server", "manager.kernel"] },
+    { "id": "kernel", "name": "커널", "desc": "파일당 하나 도는 Python 프로세스. 실행·문서·토큰의 주인", "modules": ["kernel.process", "kernel.exec", "kernel.collab"] },
+    { "id": "base", "name": "공통·기반", "desc": "와이어 상수·프레임, 경로, 잠금, 허브 DB 스키마", "modules": ["kernel.base", "hub.db"] },
+    { "id": "tools", "name": "테스트·도구·문서", "desc": "테스트, 패키징, CI 스크립트, 가이드 사이트", "modules": ["tests", "packaging", "docs"] }
+  ],
+  "modules": [
+    {
+      "id": "cli",
+      "name": "CLI",
+      "path": "darkpyonix/manager/crates/darkpyonix/src",
+      "status": "draft",
+      "one_line": "darkpyonix 명령: 매니저 찾기·자동 기동, 실행 출력 표시"
+    },
+    {
+      "id": "hub",
+      "name": "허브 API",
+      "path": ["darkpyonix/hub/worker/src", "darkpyonix/hub/worker/public", "darkpyonix/hub/worker/vitest.config.ts"],
+      "status": "draft",
+      "one_line": "darkpyonix.dev Worker: 로그인, 기기, 주소 디렉터리, 공유, 노트북"
+    },
+    {
+      "id": "kernel.runtime",
+      "name": "런타임 API",
+      "path": ["darkpyonix/kernel/__init__.py", "darkpyonix/kernel/_markdown.py", "darkpyonix/kernel/_params.py", "darkpyonix/kernel/_binding.py", "darkpyonix/kernel/_command.py", "darkpyonix/kernel/_misc.py", "darkpyonix/kernel/_display.py", "darkpyonix/kernel/_figures.py", "darkpyonix/kernel/_mplbackend.py", "darkpyonix/kernel/format"],
+      "status": "draft",
+      "one_line": "노트북이 import darkpyonix로 쓰는 API와 .py 노트북 파서"
+    },
+    {
+      "id": "manager.server",
+      "name": "매니저 서버",
+      "path": "darkpyonix/manager/crates/dpx-server/src",
+      "status": "draft",
+      "one_line": "매니저 HTTP API, 인증, 커널로 스트림 인계, 프록시, TLS"
+    },
+    {
+      "id": "manager.kernel",
+      "name": "매니저 커널 연결",
+      "path": ["darkpyonix/manager/crates/dpx-core/src", "darkpyonix/manager/crates/dpx-kernel"],
+      "status": "draft",
+      "one_line": "커널 찾기(멀티캐스트)·기동·DKP 클라이언트와 공용 타입"
+    },
+    {
+      "id": "kernel.process",
+      "name": "커널 프로세스",
+      "path": ["darkpyonix/kernel/__main__.py", "darkpyonix/kernel/_server.py", "darkpyonix/kernel/_discovery.py", "darkpyonix/kernel/_launcher.py", "darkpyonix/kernel/_client.py"],
+      "status": "draft",
+      "one_line": "커널 수명, 제어 서버, 디스커버리 응답, DKP 연산 등록"
+    },
+    {
+      "id": "kernel.exec",
+      "name": "셀 실행",
+      "path": ["darkpyonix/kernel/_executor.py", "darkpyonix/kernel/_capture.py", "darkpyonix/kernel/_runs.py", "darkpyonix/kernel/_document.py"],
+      "status": "draft",
+      "one_line": "셀 실행·인터럽트, 출력 캡처, __runs__ 실행 기록"
+    },
+    {
+      "id": "kernel.collab",
+      "name": "공동 편집",
+      "path": ["darkpyonix/kernel/_collab.py", "darkpyonix/kernel/_wsync.py", "darkpyonix/kernel/_streams.py", "darkpyonix/kernel/_tokens.py"],
+      "status": "draft",
+      "one_line": "공유 문서·잠금·presence, 접근 토큰, 인계받은 스트림 응답"
+    },
+    {
+      "id": "kernel.base",
+      "name": "커널 기반",
+      "path": ["darkpyonix/kernel/_protocol.py", "darkpyonix/kernel/_home.py", "darkpyonix/kernel/_peer.py", "darkpyonix/kernel/_winpipe.py", "darkpyonix/kernel/_lock.py", "darkpyonix/kernel/_host.py", "darkpyonix/kernel/_hostctx.py", "darkpyonix/kernel/_events.py", "darkpyonix/kernel/_model.py"],
+      "status": "draft",
+      "one_line": "와이어 상수·프레임, 홈 경로, 파일 잠금, 이벤트 링, 모델"
+    },
+    {
+      "id": "hub.db",
+      "name": "허브 DB 스키마",
+      "path": "darkpyonix/hub/worker/migrations",
+      "status": "draft",
+      "one_line": "허브 D1 테이블 마이그레이션 (0001~0011)"
+    },
+    {
+      "id": "tests",
+      "name": "테스트",
+      "path": ["tests", "darkpyonix/manager/crates/darkpyonix/tests", "darkpyonix/manager/crates/dpx-kernel/tests", "darkpyonix/manager/crates/dpx-server/tests", "darkpyonix/hub/worker/test"],
+      "status": "draft",
+      "one_line": "SPEC ID 이름의 Python·Rust·허브 테스트"
+    },
+    {
+      "id": "packaging",
+      "name": "패키징·CI",
+      "path": ["packaging", ".github/scripts"],
+      "status": "draft",
+      "one_line": "wheel 빌드 훅, 버전·스모크 검사, release 동기화 스크립트"
+    },
+    {
+      "id": "docs",
+      "name": "문서 사이트",
+      "path": "docs",
+      "status": "draft",
+      "one_line": "가이드 사이트(ko/en), OpenAPI 뷰어, 포맷 예제"
+    }
+  ],
+  "symptoms": [],
+  "flows": [],
+  "issues": [],
+  "names": []
+}

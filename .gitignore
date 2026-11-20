@@ -214,3 +214,8 @@ __marimo__/
 darkpyonix/manager/target/
 
 # Rust hub build output
+
+# vibemap generated data (map.json and progress.md are committed)
+vibemap/data/raw.json
+vibemap/data/raw_summary.md
+vibemap/out/
