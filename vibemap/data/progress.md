@@ -8,15 +8,15 @@ Windows 콘솔에서는 `PYTHONUTF8=1`을 켜고 실행한다 (cp949 출력 오�
 ## 단계
 - [x] 0. 추출 (파일 180개, 36,123줄, 모듈 후보 18개)
 - [x] 1. 지도 (모듈 13개, 층 5개, 미배정 0)
-- [ ] 2. 명함
+- [ ] 2. 명함 (3/13 완료)
 - [ ] 3. 증상 지도
 - [ ] 4. 흐름·이름
 - [ ] 5. 문제점
 
 ## 명함 우선순위 (팬인 많은 곳 → 사용자 접점 순)
-- [ ] kernel.base (`_protocol.py` 팬인 14: 커널 모듈 대부분이 사용)
-- [ ] manager.server
-- [ ] cli
+- [x] kernel.base (`_protocol.py` 팬인 14: 커널 모듈 대부분이 사용)
+- [x] manager.server
+- [x] cli
 - [ ] kernel.process
 - [ ] kernel.exec
 - [ ] kernel.collab
