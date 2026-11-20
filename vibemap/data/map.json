@@ -7,20 +7,81 @@
     "commit": "253de56",
     "updated": "2026-11-20",
     "how_to_run": [
-      { "label": "노트북 실행", "cmd": "darkpyonix run file.py" },
-      { "label": "커널만 직접", "cmd": "python -m darkpyonix --file file.py" },
-      { "label": "매니저", "cmd": "darkpyonix manager [--ephemeral]" },
-      { "label": "Python 테스트", "cmd": "pytest" },
-      { "label": "Rust 테스트 (builder 서브에이전트만, CARGO_BUILD_JOBS=2)", "cmd": "cd darkpyonix/manager && cargo test" },
-      { "label": "허브 테스트", "cmd": "cd darkpyonix/hub/worker && npm test" }
+      {
+        "label": "노트북 실행",
+        "cmd": "darkpyonix run file.py"
+      },
+      {
+        "label": "커널만 직접",
+        "cmd": "python -m darkpyonix --file file.py"
+      },
+      {
+        "label": "매니저",
+        "cmd": "darkpyonix manager [--ephemeral]"
+      },
+      {
+        "label": "Python 테스트",
+        "cmd": "pytest"
+      },
+      {
+        "label": "Rust 테스트 (builder 서브에이전트만, CARGO_BUILD_JOBS=2)",
+        "cmd": "cd darkpyonix/manager && cargo test"
+      },
+      {
+        "label": "허브 테스트",
+        "cmd": "cd darkpyonix/hub/worker && npm test"
+      }
     ]
   },
   "layers": [
-    { "id": "front", "name": "사용자 접점", "desc": "사람·에이전트·노트북 코드가 직접 부르는 곳: CLI, 허브 API, 런타임 API", "modules": ["cli", "hub", "kernel.runtime"] },
-    { "id": "manager", "name": "매니저", "desc": "커널 앞의 버려도 되는 HTTP 앞단. 인증 후 커널에 넘김", "modules": ["manager.server", "manager.kernel"] },
-    { "id": "kernel", "name": "커널", "desc": "파일당 하나 도는 Python 프로세스. 실행·문서·토큰의 주인", "modules": ["kernel.process", "kernel.exec", "kernel.collab"] },
-    { "id": "base", "name": "공통·기반", "desc": "와이어 상수·프레임, 경로, 잠금, 허브 DB 스키마", "modules": ["kernel.base", "hub.db"] },
-    { "id": "tools", "name": "테스트·도구·문서", "desc": "테스트, 패키징, CI 스크립트, 가이드 사이트", "modules": ["tests", "packaging", "docs"] }
+    {
+      "id": "front",
+      "name": "사용자 접점",
+      "desc": "사람·에이전트·노트북 코드가 직접 부르는 곳: CLI, 허브 API, 런타임 API",
+      "modules": [
+        "cli",
+        "hub",
+        "kernel.runtime"
+      ]
+    },
+    {
+      "id": "manager",
+      "name": "매니저",
+      "desc": "커널 앞의 버려도 되는 HTTP 앞단. 인증 후 커널에 넘김",
+      "modules": [
+        "manager.server",
+        "manager.kernel"
+      ]
+    },
+    {
+      "id": "kernel",
+      "name": "커널",
+      "desc": "파일당 하나 도는 Python 프로세스. 실행·문서·토큰의 주인",
+      "modules": [
+        "kernel.process",
+        "kernel.exec",
+        "kernel.collab"
+      ]
+    },
+    {
+      "id": "base",
+      "name": "공통·기반",
+      "desc": "와이어 상수·프레임, 경로, 잠금, 허브 DB 스키마",
+      "modules": [
+        "kernel.base",
+        "hub.db"
+      ]
+    },
+    {
+      "id": "tools",
+      "name": "테스트·도구·문서",
+      "desc": "테스트, 패키징, CI 스크립트, 가이드 사이트",
+      "modules": [
+        "tests",
+        "packaging",
+        "docs"
+      ]
+    }
   ],
   "modules": [
     {
@@ -30,20 +91,60 @@
       "status": "verified",
       "one_line": "darkpyonix 명령: 매니저 찾기·자동 기동, 실행 출력 표시",
       "entry_points": [
-        { "name": "Command", "at": "darkpyonix/manager/crates/darkpyonix/src/args.rs:26", "what": "명령 목록 (run, stop, status, ps, logs …)" },
-        { "name": "dispatch_inner", "at": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:89", "what": "명령별 HTTP 호출 분기 (약 150줄 한 함수)" },
-        { "name": "resolve_file", "at": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:189", "what": "파일 → kernel_id. 매니저 찾기·임시 기동도 이 파일" },
-        { "name": "run_manager", "at": "darkpyonix/manager/crates/darkpyonix/src/manager.rs:48", "what": "darkpyonix manager 모드" }
+        {
+          "name": "Command",
+          "at": "darkpyonix/manager/crates/darkpyonix/src/args.rs:26",
+          "what": "명령 목록 (run, stop, status, ps, logs …)"
+        },
+        {
+          "name": "dispatch_inner",
+          "at": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:89",
+          "what": "명령별 HTTP 호출 분기 (약 150줄 한 함수)"
+        },
+        {
+          "name": "resolve_file",
+          "at": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:189",
+          "what": "파일 → kernel_id. 매니저 찾기·임시 기동도 이 파일"
+        },
+        {
+          "name": "run_manager",
+          "at": "darkpyonix/manager/crates/darkpyonix/src/manager.rs:48",
+          "what": "darkpyonix manager 모드"
+        }
       ],
       "contracts": [
-        { "name": "EXIT_OK", "at": "darkpyonix/manager/crates/darkpyonix/src/render.rs:5", "what": "종료 코드 0/1/75(busy)/130(인터럽트)", "breaks_if": "에이전트가 종료 코드로 판단하는 로직 (FR-C2)" },
-        { "name": "startup_line", "at": "darkpyonix/manager/crates/darkpyonix/src/manager.rs:88", "what": "매니저 기동 시 stdout JSON 한 줄", "breaks_if": "CLI 임시 매니저 기동, ember 등 매니저를 띄우는 쪽" },
-        { "name": "TOKEN_ENV", "at": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:19", "what": "DARKPYONIX_MANAGER_URL + DARKPYONIX_TOKEN", "breaks_if": "이미 떠 있는 매니저에 붙는 에이전트·스크립트" }
+        {
+          "name": "EXIT_OK",
+          "at": "darkpyonix/manager/crates/darkpyonix/src/render.rs:5",
+          "what": "종료 코드 0/1/75(busy)/130(인터럽트)",
+          "breaks_if": "에이전트가 종료 코드로 판단하는 로직 (FR-C2)"
+        },
+        {
+          "name": "startup_line",
+          "at": "darkpyonix/manager/crates/darkpyonix/src/manager.rs:88",
+          "what": "매니저 기동 시 stdout JSON 한 줄",
+          "breaks_if": "CLI 임시 매니저 기동, ember 등 매니저를 띄우는 쪽"
+        },
+        {
+          "name": "TOKEN_ENV",
+          "at": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:19",
+          "what": "DARKPYONIX_MANAGER_URL + DARKPYONIX_TOKEN",
+          "breaks_if": "이미 떠 있는 매니저에 붙는 에이전트·스크립트"
+        }
       ],
       "problems": [
-        { "symptom": "커널이 도는데 'no kernel is running for …' (Windows)", "check": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:189" },
-        { "symptom": "run이 바로 75로 끝남", "check": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:300" },
-        { "symptom": "Ctrl-C 한 번에 실행이 안 멈추고 분리됨", "check": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:397" }
+        {
+          "symptom": "커널이 도는데 'no kernel is running for …' (Windows)",
+          "check": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:189"
+        },
+        {
+          "symptom": "run이 바로 75로 끝남",
+          "check": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:300"
+        },
+        {
+          "symptom": "Ctrl-C 한 번에 실행이 안 멈추고 분리됨",
+          "check": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:397"
+        }
       ],
       "cautions": [
         "resolve_file이 canonicalize+자체 해시를 씀. 커널 규칙(realpath+normcase)과 다를 수 있음",
@@ -54,16 +155,160 @@
     {
       "id": "hub",
       "name": "허브 API",
-      "path": ["darkpyonix/hub/worker/src", "darkpyonix/hub/worker/public", "darkpyonix/hub/worker/vitest.config.ts"],
-      "status": "draft",
-      "one_line": "darkpyonix.dev Worker: 로그인, 기기, 주소 디렉터리, 공유, 노트북"
+      "path": [
+        "darkpyonix/hub/worker/src",
+        "darkpyonix/hub/worker/public",
+        "darkpyonix/hub/worker/vitest.config.ts"
+      ],
+      "status": "carded",
+      "one_line": "darkpyonix.dev Worker: 로그인, 기기, 주소 디렉터리, 공유, 노트북",
+      "entry_points": [
+        {
+          "name": "ROUTES",
+          "at": "darkpyonix/hub/worker/src/app.ts:106",
+          "what": "허브 라우트 표 전체 (hub.openapi.yaml과 1:1)"
+        },
+        {
+          "name": "principal",
+          "at": "darkpyonix/hub/worker/src/http.ts:128",
+          "what": "기기 토큰 Bearer 또는 브라우저 세션으로 주체 확인"
+        },
+        {
+          "name": "claimLink",
+          "at": "darkpyonix/hub/worker/src/devices.ts:358",
+          "what": "기기 연결 마지막 단계: 서명 확인 후 기기 토큰 발급"
+        },
+        {
+          "name": "pkarrWatch",
+          "at": "darkpyonix/hub/worker/src/directory.ts:184",
+          "what": "주소 레코드 변경 롱폴 (최대 32키·25초)"
+        }
+      ],
+      "contracts": [
+        {
+          "name": "ApiError",
+          "at": "darkpyonix/hub/worker/src/http.ts:10",
+          "what": "{\"error\", \"code\"?} 오류 모양 (매니저와 다름)",
+          "breaks_if": "ember·ash·매니저의 허브 오류 처리"
+        },
+        {
+          "name": "bumpDevicesVersion",
+          "at": "darkpyonix/hub/worker/src/devices.ts:127",
+          "what": "기기 목록 버전 증가",
+          "breaks_if": "빠뜨리면 GET /devices 롱폴·ETag가 변경을 못 봄"
+        },
+        {
+          "name": "pkarrPut",
+          "at": "darkpyonix/hub/worker/src/directory.ts:16",
+          "what": "주소 게시 + records_version + online=1",
+          "breaks_if": "/pkarr/watch 롱폴과 기기 online 표시"
+        },
+        {
+          "name": "expireOnline",
+          "at": "darkpyonix/hub/worker/src/devices.ts:138",
+          "what": "15분 넘게 게시 없으면 offline",
+          "breaks_if": "기기 목록의 online 표시 (FR-H1)"
+        }
+      ],
+      "problems": [
+        {
+          "symptom": "기기가 켜져 있는데 offline으로 보임",
+          "check": "darkpyonix/hub/worker/src/devices.ts:132"
+        },
+        {
+          "symptom": "기기 연결 코드 승인 후에도 기기가 토큰을 못 받음",
+          "check": "darkpyonix/hub/worker/src/devices.ts:358"
+        },
+        {
+          "symptom": "공유 링크를 열어도 노트북에 연결 안 됨",
+          "check": "darkpyonix/hub/worker/src/shares.ts:46"
+        }
+      ],
+      "cautions": [
+        "엔드포인트는 docs/api/hub.openapi.yaml이 정본. 삭제된 릴레이 경로는 deprecated로 남음",
+        "/pkarr/watch는 /pkarr/{key}보다 먼저 등록 ('watch'는 z32 키가 아님)",
+        "허브는 릴레이를 운영하지 않음 (INTENT D23). 공유 링크의 브라우저 연결 경로는 미정(Q19)",
+        "app.ts VERSION이 0.3.0으로 패키지 0.3.1과 다름"
+      ]
     },
     {
       "id": "kernel.runtime",
       "name": "런타임 API",
-      "path": ["darkpyonix/kernel/__init__.py", "darkpyonix/kernel/_markdown.py", "darkpyonix/kernel/_params.py", "darkpyonix/kernel/_binding.py", "darkpyonix/kernel/_command.py", "darkpyonix/kernel/_misc.py", "darkpyonix/kernel/_display.py", "darkpyonix/kernel/_figures.py", "darkpyonix/kernel/_mplbackend.py", "darkpyonix/kernel/format"],
-      "status": "draft",
-      "one_line": "노트북이 import darkpyonix로 쓰는 API와 .py 노트북 파서"
+      "path": [
+        "darkpyonix/kernel/__init__.py",
+        "darkpyonix/kernel/_markdown.py",
+        "darkpyonix/kernel/_params.py",
+        "darkpyonix/kernel/_binding.py",
+        "darkpyonix/kernel/_command.py",
+        "darkpyonix/kernel/_misc.py",
+        "darkpyonix/kernel/_display.py",
+        "darkpyonix/kernel/_figures.py",
+        "darkpyonix/kernel/_mplbackend.py",
+        "darkpyonix/kernel/format"
+      ],
+      "status": "carded",
+      "one_line": "노트북이 import darkpyonix로 쓰는 API와 .py 노트북 파서",
+      "entry_points": [
+        {
+          "name": "_EXPORTS",
+          "at": "darkpyonix/kernel/__init__.py:14",
+          "what": "공개 API 목록 (PEP 562 지연 로딩)"
+        },
+        {
+          "name": "parse",
+          "at": "darkpyonix/kernel/format/__init__.py:74",
+          "what": "# %% 마커로 셀 분리. serialize(parse(x)) == x"
+        },
+        {
+          "name": "Params",
+          "at": "darkpyonix/kernel/_params.py:104",
+          "what": "노트북 파라미터: 요청 params → --name → default"
+        },
+        {
+          "name": "binding",
+          "at": "darkpyonix/kernel/_binding.py:89",
+          "what": "정의 시점 전역 스냅샷에서 def/class 재평가"
+        }
+      ],
+      "contracts": [
+        {
+          "name": "source_sha256",
+          "at": "darkpyonix/kernel/format/_parser.py:60",
+          "what": "셀 본문 해시 (정규화 포함)",
+          "breaks_if": "규칙 변경 시 기존 __runs__ 기록이 셀에 매칭 안 됨"
+        },
+        {
+          "name": "MARKER_RE",
+          "at": "darkpyonix/kernel/format/_parser.py:25",
+          "what": "# %% 제목 [타입] 마커",
+          "breaks_if": "모든 노트북 파일 해석, docs/FORMAT.md"
+        },
+        {
+          "name": "__version__",
+          "at": "darkpyonix/kernel/__init__.py:12",
+          "what": "버전 정본",
+          "breaks_if": "check_versions.py, Cargo.toml, wheel 이름"
+        }
+      ],
+      "problems": [
+        {
+          "symptom": "셀이 나뉘지 않거나 타입이 틀리게 인식됨",
+          "check": "darkpyonix/kernel/format/_parser.py:25"
+        },
+        {
+          "symptom": "plt.show() 그림이 안 나옴",
+          "check": "darkpyonix/kernel/_figures.py:34"
+        },
+        {
+          "symptom": "pip/uv 출력이 셀에 안 보이거나 섞임",
+          "check": "darkpyonix/kernel/_command.py:70"
+        }
+      ],
+      "cautions": [
+        "import darkpyonix는 커널 모듈(_server, _executor)을 import하면 안 됨. 테스트가 검사",
+        "커널 밖(plain python)에서도 동작해야 함 (FR-F5)",
+        "run_cinterop 등 3개는 예약만 됨 (호출하면 NotImplementedError)"
+      ]
     },
     {
       "id": "manager.server",
@@ -72,21 +317,66 @@
       "status": "verified",
       "one_line": "매니저 HTTP API, 인증, 커널로 스트림 인계, 프록시, TLS",
       "entry_points": [
-        { "name": "router", "at": "darkpyonix/manager/crates/dpx-server/src/lib.rs:355", "what": "라우트 표 전체 (manager.openapi.yaml과 1:1)" },
-        { "name": "auth_gate", "at": "darkpyonix/manager/crates/dpx-server/src/lib.rs:290", "what": "라우팅 전에 인증. 익명은 항상 401" },
-        { "name": "AppState", "at": "darkpyonix/manager/crates/dpx-server/src/api.rs:29", "what": "핸들러 공유 상태. 핸들러는 api.rs에 전부 있음" },
-        { "name": "plan_handoff", "at": "darkpyonix/manager/crates/dpx-server/src/api.rs:1903", "what": "events/ws/wait 긴 스트림을 커널에 넘길지 결정" }
+        {
+          "name": "router",
+          "at": "darkpyonix/manager/crates/dpx-server/src/lib.rs:355",
+          "what": "라우트 표 전체 (manager.openapi.yaml과 1:1)"
+        },
+        {
+          "name": "auth_gate",
+          "at": "darkpyonix/manager/crates/dpx-server/src/lib.rs:290",
+          "what": "라우팅 전에 인증. 익명은 항상 401"
+        },
+        {
+          "name": "AppState",
+          "at": "darkpyonix/manager/crates/dpx-server/src/api.rs:29",
+          "what": "핸들러 공유 상태. 핸들러는 api.rs에 전부 있음"
+        },
+        {
+          "name": "plan_handoff",
+          "at": "darkpyonix/manager/crates/dpx-server/src/api.rs:1903",
+          "what": "events/ws/wait 긴 스트림을 커널에 넘길지 결정"
+        }
       ],
       "contracts": [
-        { "name": "ApiError", "at": "darkpyonix/manager/crates/dpx-server/src/error.rs:10", "what": "{\"error\": {code, message, data?}} 오류 모양", "breaks_if": "CLI·ember·ash·IDE 확장의 오류 처리 (팬인 5)" },
-        { "name": "require", "at": "darkpyonix/manager/crates/dpx-server/src/api.rs:146", "what": "연산별 능력(capability) 검사", "breaks_if": "토큰 권한이 넓어지거나 정상 요청이 403" },
-        { "name": "CAPABILITIES", "at": "darkpyonix/manager/crates/dpx-server/src/auth.rs:87", "what": "능력 5개와 정해진 순서", "breaks_if": "커널 _tokens.py 사본과 어긋나 토큰 검증 실패" },
-        { "name": "serve", "at": "darkpyonix/manager/crates/dpx-server/src/lib.rs:461", "what": "서버 기동 (CLI manager 모드가 호출)", "breaks_if": "darkpyonix manager와 임시 매니저 자동 기동" }
+        {
+          "name": "ApiError",
+          "at": "darkpyonix/manager/crates/dpx-server/src/error.rs:10",
+          "what": "{\"error\": {code, message, data?}} 오류 모양",
+          "breaks_if": "CLI·ember·ash·IDE 확장의 오류 처리 (팬인 5)"
+        },
+        {
+          "name": "require",
+          "at": "darkpyonix/manager/crates/dpx-server/src/api.rs:146",
+          "what": "연산별 능력(capability) 검사",
+          "breaks_if": "토큰 권한이 넓어지거나 정상 요청이 403"
+        },
+        {
+          "name": "CAPABILITIES",
+          "at": "darkpyonix/manager/crates/dpx-server/src/auth.rs:87",
+          "what": "능력 5개와 정해진 순서",
+          "breaks_if": "커널 _tokens.py 사본과 어긋나 토큰 검증 실패"
+        },
+        {
+          "name": "serve",
+          "at": "darkpyonix/manager/crates/dpx-server/src/lib.rs:461",
+          "what": "서버 기동 (CLI manager 모드가 호출)",
+          "breaks_if": "darkpyonix manager와 임시 매니저 자동 기동"
+        }
       ],
       "problems": [
-        { "symptom": "토큰을 넣었는데 401/403", "check": "darkpyonix/manager/crates/dpx-server/src/lib.rs:290" },
-        { "symptom": "브라우저 이벤트 스트림이 끊기거나 안 옴", "check": "darkpyonix/manager/crates/dpx-server/src/handoff.rs:142" },
-        { "symptom": "비밀번호 로그인이 점점 느려짐/잠김", "check": "darkpyonix/manager/crates/dpx-server/src/auth.rs:260" }
+        {
+          "symptom": "토큰을 넣었는데 401/403",
+          "check": "darkpyonix/manager/crates/dpx-server/src/lib.rs:290"
+        },
+        {
+          "symptom": "브라우저 이벤트 스트림이 끊기거나 안 옴",
+          "check": "darkpyonix/manager/crates/dpx-server/src/handoff.rs:142"
+        },
+        {
+          "symptom": "비밀번호 로그인이 점점 느려짐/잠김",
+          "check": "darkpyonix/manager/crates/dpx-server/src/auth.rs:260"
+        }
       ],
       "cautions": [
         "엔드포인트는 docs/api/manager.openapi.yaml 먼저. 테스트가 제공 스키마와 파일을 비교",
@@ -97,54 +387,389 @@
     {
       "id": "manager.kernel",
       "name": "매니저 커널 연결",
-      "path": ["darkpyonix/manager/crates/dpx-core/src", "darkpyonix/manager/crates/dpx-kernel"],
-      "status": "draft",
-      "one_line": "커널 찾기(멀티캐스트)·기동·DKP 클라이언트와 공용 타입"
+      "path": [
+        "darkpyonix/manager/crates/dpx-core/src",
+        "darkpyonix/manager/crates/dpx-kernel"
+      ],
+      "status": "carded",
+      "one_line": "커널 찾기(멀티캐스트)·기동·DKP 클라이언트와 공용 타입",
+      "entry_points": [
+        {
+          "name": "KernelBackend",
+          "at": "darkpyonix/manager/crates/dpx-core/src/lib.rs:119",
+          "what": "HTTP 계층이 커널에 요구하는 것 전부 (트레이트)"
+        },
+        {
+          "name": "RealBackend",
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/lib.rs:77",
+          "what": "실구현: 커널 찾기, 없으면 기동(201), 이벤트, 인계"
+        },
+        {
+          "name": "Connection",
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/dkp.rs:424",
+          "what": "커널당 DKP 연결 하나를 모두가 공유"
+        },
+        {
+          "name": "spawn_kernel",
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/launch.rs:135",
+          "what": "내장 Python 패키지를 풀고 커널을 분리 기동"
+        }
+      ],
+      "contracts": [
+        {
+          "name": "DpxError",
+          "at": "darkpyonix/manager/crates/dpx-core/src/lib.rs:22",
+          "what": "OpenAPI Error + DKP 오류 코드",
+          "breaks_if": "매니저 서버 error.rs의 HTTP 상태 매핑"
+        },
+        {
+          "name": "KernelInfo",
+          "at": "darkpyonix/manager/crates/dpx-core/src/lib.rs:45",
+          "what": "OpenAPI Kernel 모양",
+          "breaks_if": "커널 목록·조회 응답, CLI ps/status 출력"
+        },
+        {
+          "name": "kernel_id_for",
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/ident.rs:13",
+          "what": "Python realpath/normcase 이식",
+          "breaks_if": "커널 _protocol.py와 어긋나면 파일→커널 매칭 실패"
+        },
+        {
+          "name": "kill_pid",
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/process.rs:12",
+          "what": "커널을 죽이는 유일한 경로",
+          "breaks_if": "--force 외에서 쓰면 '정지=인터럽트' 제약 위반"
+        }
+      ],
+      "problems": [
+        {
+          "symptom": "darkpyonix run이 커널 기동 시간 초과",
+          "check": "darkpyonix/manager/crates/dpx-kernel/src/lib.rs:34"
+        },
+        {
+          "symptom": "다른 계정 커널에 접속 거부",
+          "check": "darkpyonix/manager/crates/dpx-kernel/src/dkp.rs:106"
+        },
+        {
+          "symptom": "커널 소스를 고쳤는데 옛 버전이 뜸",
+          "check": "darkpyonix/manager/crates/dpx-kernel/src/launch.rs:25"
+        }
+      ],
+      "cautions": [
+        "build.rs가 darkpyonix/kernel 소스를 바이너리에 내장. Python 수정 = Rust 재빌드",
+        "디스커버리·프레임·홈 경로·부트스트랩이 Python과 이중 구현",
+        "빌드는 builder 서브에이전트만, CARGO_BUILD_JOBS=2"
+      ]
     },
     {
       "id": "kernel.process",
       "name": "커널 프로세스",
-      "path": ["darkpyonix/kernel/__main__.py", "darkpyonix/kernel/_server.py", "darkpyonix/kernel/_discovery.py", "darkpyonix/kernel/_launcher.py", "darkpyonix/kernel/_client.py"],
-      "status": "draft",
-      "one_line": "커널 수명, 제어 서버, 디스커버리 응답, DKP 연산 등록"
+      "path": [
+        "darkpyonix/kernel/__main__.py",
+        "darkpyonix/kernel/_server.py",
+        "darkpyonix/kernel/_discovery.py",
+        "darkpyonix/kernel/_launcher.py",
+        "darkpyonix/kernel/_client.py"
+      ],
+      "status": "carded",
+      "one_line": "커널 수명, 제어 서버, 디스커버리 응답, DKP 연산 등록",
+      "entry_points": [
+        {
+          "name": "main",
+          "at": "darkpyonix/kernel/__main__.py:252",
+          "what": "python -m darkpyonix --file 진입. 파일 없으면 exit 2"
+        },
+        {
+          "name": "Kernel",
+          "at": "darkpyonix/kernel/__main__.py:45",
+          "what": "커널 프로세스 조립 (잠금, 서버, 실행기, 문서)"
+        },
+        {
+          "name": "handlers",
+          "at": "darkpyonix/kernel/__main__.py:164",
+          "what": "DKP 기본 연산 표 (status, run, interrupt …)"
+        },
+        {
+          "name": "ControlServer",
+          "at": "darkpyonix/kernel/_server.py:103",
+          "what": "제어 채널. selector 스레드 하나 + 워커 4개"
+        }
+      ],
+      "contracts": [
+        {
+          "name": "handlers",
+          "at": "darkpyonix/kernel/__main__.py:164",
+          "what": "DKP 연산 이름",
+          "breaks_if": "매니저 api.rs의 call(\"…\") 문자열과 어긋나면 해당 API가 unknown_method"
+        },
+        {
+          "name": "DiscoveryResponder",
+          "at": "darkpyonix/kernel/_discovery.py:97",
+          "what": "멀티캐스트 announce/질의 응답",
+          "breaks_if": "Rust discovery.rs와 형식이 다르면 매니저가 커널을 못 찾음"
+        },
+        {
+          "name": "BOOTSTRAP_PRELUDE",
+          "at": "darkpyonix/kernel/_launcher.py:22",
+          "what": "설치 없는 인터프리터용 부트스트랩",
+          "breaks_if": "Rust launch.rs bootstrap 사본과 어긋나면 커널 기동 실패"
+        }
+      ],
+      "problems": [
+        {
+          "symptom": "커널 종료 후 같은 파일 커널이 다시 안 뜸(잠금 남음)",
+          "check": "darkpyonix/kernel/__main__.py:237"
+        },
+        {
+          "symptom": "느린 클라이언트 때문에 다른 연결도 멈춤",
+          "check": "darkpyonix/kernel/_server.py:33"
+        },
+        {
+          "symptom": "매니저가 커널 목록에 안 보임",
+          "check": "darkpyonix/kernel/_discovery.py:139"
+        }
+      ],
+      "cautions": [
+        "_teardown은 단계별 예외를 삼켜 잠금 해제를 보장. 순서 바꾸지 말 것",
+        "정지 = 인터럽트. shutdown도 셀을 인터럽트한 뒤 종료. kill은 매니저 --force만",
+        "_client.py는 헤더와 달리 테스트만 사용 (프로덕션 import 0)"
+      ]
     },
     {
       "id": "kernel.exec",
       "name": "셀 실행",
-      "path": ["darkpyonix/kernel/_executor.py", "darkpyonix/kernel/_capture.py", "darkpyonix/kernel/_runs.py", "darkpyonix/kernel/_document.py"],
-      "status": "draft",
-      "one_line": "셀 실행·인터럽트, 출력 캡처, __runs__ 실행 기록"
+      "path": [
+        "darkpyonix/kernel/_executor.py",
+        "darkpyonix/kernel/_capture.py",
+        "darkpyonix/kernel/_runs.py",
+        "darkpyonix/kernel/_document.py"
+      ],
+      "status": "carded",
+      "one_line": "셀 실행·인터럽트, 출력 캡처, __runs__ 실행 기록",
+      "entry_points": [
+        {
+          "name": "Executor",
+          "at": "darkpyonix/kernel/_executor.py:66",
+          "what": "한 파일·한 네임스페이스의 셀 실행 엔진"
+        },
+        {
+          "name": "submit",
+          "at": "darkpyonix/kernel/_executor.py:128",
+          "what": "DKP run 요청을 큐에 넣음"
+        },
+        {
+          "name": "RunStore",
+          "at": "darkpyonix/kernel/_runs.py:274",
+          "what": "__runs__/<파일>/<run_id>.ipynb 기록·조회"
+        },
+        {
+          "name": "OutputRouter",
+          "at": "darkpyonix/kernel/_capture.py:33",
+          "what": "stdout/stderr·fd 출력을 모아 기록·발행"
+        }
+      ],
+      "contracts": [
+        {
+          "name": "build_document",
+          "at": "darkpyonix/kernel/_document.py:76",
+          "what": "파일+최신 출력 → OpenAPI Document",
+          "breaks_if": "매니저 /document (launch.rs가 Python으로 호출), WS 셀 매칭"
+        },
+        {
+          "name": "runs_dir_for",
+          "at": "darkpyonix/kernel/_runs.py:58",
+          "what": "실행 기록 폴더 위치",
+          "breaks_if": "매니저 util.rs 사본과 어긋나면 runs API가 빈 목록"
+        },
+        {
+          "name": "_RUN_ID_RE",
+          "at": "darkpyonix/kernel/_runs.py:49",
+          "what": "run id 형식 YYYYMMDD-HHMMSS-xxxx",
+          "breaks_if": "매니저 is_run_id 검사에서 400"
+        },
+        {
+          "name": "interrupt",
+          "at": "darkpyonix/kernel/_executor.py:219",
+          "what": "실행 중 셀에 KeyboardInterrupt",
+          "breaks_if": "CLI Ctrl-C, stop, 매니저 interrupt API"
+        }
+      ],
+      "problems": [
+        {
+          "symptom": "셀 출력 순서가 뒤섞이거나 늦게 나옴",
+          "check": "darkpyonix/kernel/_capture.py:142"
+        },
+        {
+          "symptom": "큰 출력이 실행 기록에서 잘림 / .log 파일이 생김",
+          "check": "darkpyonix/kernel/_runs.py:45"
+        },
+        {
+          "symptom": "커널이 죽은 뒤 실행이 running으로 남음",
+          "check": "darkpyonix/kernel/_runs.py:487"
+        }
+      ],
+      "cautions": [
+        "run_forever는 메인 스레드에서만. 제어는 다른 스레드 (INTENT D12)",
+        "실행 기록 metadata.darkpyonix를 매니저 run_summary가 직접 파싱. 필드명 변경 시 Rust도",
+        "hard restart는 루프 종료 후 __main__.py에서 os.execv로 프로세스 교체"
+      ]
     },
     {
       "id": "kernel.collab",
       "name": "공동 편집",
-      "path": ["darkpyonix/kernel/_collab.py", "darkpyonix/kernel/_wsync.py", "darkpyonix/kernel/_streams.py", "darkpyonix/kernel/_tokens.py"],
-      "status": "draft",
-      "one_line": "공유 문서·잠금·presence, 접근 토큰, 인계받은 스트림 응답"
+      "path": [
+        "darkpyonix/kernel/_collab.py",
+        "darkpyonix/kernel/_wsync.py",
+        "darkpyonix/kernel/_streams.py",
+        "darkpyonix/kernel/_tokens.py"
+      ],
+      "status": "carded",
+      "one_line": "공유 문서·잠금·presence, 접근 토큰, 인계받은 스트림 응답",
+      "entry_points": [
+        {
+          "name": "DocumentState",
+          "at": "darkpyonix/kernel/_collab.py:162",
+          "what": "파일을 메모리에 두고 셀 편집·잠금·presence 제공"
+        },
+        {
+          "name": "TokenStore",
+          "at": "darkpyonix/kernel/_tokens.py:54",
+          "what": "커널 접근 토큰 발급·검증·폐기 (FR-K10)"
+        },
+        {
+          "name": "StreamHub",
+          "at": "darkpyonix/kernel/_streams.py:124",
+          "what": "매니저가 넘긴 SSE/WS/wait 연결에 직접 응답"
+        },
+        {
+          "name": "WsSync",
+          "at": "darkpyonix/kernel/_wsync.py:186",
+          "what": "2025 WebSocket 동기화 메시지"
+        }
+      ],
+      "contracts": [
+        {
+          "name": "handlers",
+          "at": "darkpyonix/kernel/_collab.py:276",
+          "what": "doc.*, presence.* 연산",
+          "breaks_if": "매니저 셀·잠금·presence API 전부"
+        },
+        {
+          "name": "CAPABILITIES",
+          "at": "darkpyonix/kernel/_tokens.py:25",
+          "what": "능력 5개",
+          "breaks_if": "매니저 auth.rs, _collab, _streams 사본과 함께 바꿔야 함"
+        },
+        {
+          "name": "adopt",
+          "at": "darkpyonix/kernel/_streams.py:138",
+          "what": "인계받은 소켓 처리",
+          "breaks_if": "매니저 handoff.rs와 어긋나면 브라우저 스트림 끊김"
+        }
+      ],
+      "problems": [
+        {
+          "symptom": "다른 사람 편집이 저장 안 됨 / 외부 편집이 덮어씀",
+          "check": "darkpyonix/kernel/_collab.py:760"
+        },
+        {
+          "symptom": "공유 링크 토큰이 거부됨",
+          "check": "darkpyonix/kernel/_tokens.py:54"
+        },
+        {
+          "symptom": "WebSocket이 1분 뒤 끊김",
+          "check": "darkpyonix/kernel/_wsync.py:23"
+        }
+      ],
+      "cautions": [
+        "능력 이름이 4곳(_collab, _tokens, _streams, Rust auth.rs)에 중복",
+        "토큰은 SHA-256 해시로만 저장. 노트북 파일이 사라지면 토큰 저장소도 삭제",
+        "read 권한 없으면 셀 코드를 비운 이벤트를 보냄 (_blank_sources)"
+      ]
     },
     {
       "id": "kernel.base",
       "name": "커널 기반",
-      "path": ["darkpyonix/kernel/_protocol.py", "darkpyonix/kernel/_home.py", "darkpyonix/kernel/_peer.py", "darkpyonix/kernel/_winpipe.py", "darkpyonix/kernel/_lock.py", "darkpyonix/kernel/_host.py", "darkpyonix/kernel/_hostctx.py", "darkpyonix/kernel/_events.py", "darkpyonix/kernel/_model.py"],
+      "path": [
+        "darkpyonix/kernel/_protocol.py",
+        "darkpyonix/kernel/_home.py",
+        "darkpyonix/kernel/_peer.py",
+        "darkpyonix/kernel/_winpipe.py",
+        "darkpyonix/kernel/_lock.py",
+        "darkpyonix/kernel/_host.py",
+        "darkpyonix/kernel/_hostctx.py",
+        "darkpyonix/kernel/_events.py",
+        "darkpyonix/kernel/_model.py"
+      ],
       "status": "verified",
       "one_line": "와이어 상수·프레임, 홈 경로, 파일 잠금, 이벤트 링, 모델",
       "entry_points": [
-        { "name": "DKP_VERSION", "at": "darkpyonix/kernel/_protocol.py:20", "what": "DKP/1 와이어 상수 모음의 시작 (디스커버리 주소·포트, 프레임 한도)" },
-        { "name": "kernel_id_for", "at": "darkpyonix/kernel/_protocol.py:83", "what": "파일 경로 → k_ + SHA-256 앞 20자리 (FR-K2)" },
-        { "name": "home", "at": "darkpyonix/kernel/_home.py:16", "what": "~/.darkpyonix (DARKPYONIX_HOME) 아래 경로들" },
-        { "name": "FileLock", "at": "darkpyonix/kernel/_lock.py:19", "what": "파일당 커널 하나를 OS 잠금으로 보장 (FR-K3)" }
+        {
+          "name": "DKP_VERSION",
+          "at": "darkpyonix/kernel/_protocol.py:20",
+          "what": "DKP/1 와이어 상수 모음의 시작 (디스커버리 주소·포트, 프레임 한도)"
+        },
+        {
+          "name": "kernel_id_for",
+          "at": "darkpyonix/kernel/_protocol.py:83",
+          "what": "파일 경로 → k_ + SHA-256 앞 20자리 (FR-K2)"
+        },
+        {
+          "name": "home",
+          "at": "darkpyonix/kernel/_home.py:16",
+          "what": "~/.darkpyonix (DARKPYONIX_HOME) 아래 경로들"
+        },
+        {
+          "name": "FileLock",
+          "at": "darkpyonix/kernel/_lock.py:19",
+          "what": "파일당 커널 하나를 OS 잠금으로 보장 (FR-K3)"
+        }
       ],
       "contracts": [
-        { "name": "encode", "at": "darkpyonix/kernel/_protocol.py:91", "what": "길이 접두 JSON 프레임 인코딩", "breaks_if": "매니저 Rust DKP 클라이언트(dkp.rs)와 모든 커널 연결이 깨짐" },
-        { "name": "canonical_path", "at": "darkpyonix/kernel/_protocol.py:75", "what": "realpath + Windows normcase", "breaks_if": "매니저·CLI가 계산한 kernel_id와 어긋나 커널을 못 찾음" },
-        { "name": "GROUP", "at": "darkpyonix/manager/crates/dpx-kernel/src/discovery.rs:30", "what": "Python 디스커버리 상수의 Rust 사본", "breaks_if": "한쪽만 바꾸면 매니저가 실행 중 커널을 못 찾음" },
-        { "name": "RUN_STATUSES", "at": "darkpyonix/kernel/_model.py:10", "what": "실행 상태 이름 (queued~crashed)", "breaks_if": "OpenAPI RunSummary, CLI 종료 코드 매핑이 어긋남" },
-        { "name": "in_kernel", "at": "darkpyonix/kernel/_hostctx.py:16", "what": "실행기 ↔ 런타임 API 다리", "breaks_if": "markdown·params·display가 커널 안에서 plain python처럼 동작" }
+        {
+          "name": "encode",
+          "at": "darkpyonix/kernel/_protocol.py:91",
+          "what": "길이 접두 JSON 프레임 인코딩",
+          "breaks_if": "매니저 Rust DKP 클라이언트(dkp.rs)와 모든 커널 연결이 깨짐"
+        },
+        {
+          "name": "canonical_path",
+          "at": "darkpyonix/kernel/_protocol.py:75",
+          "what": "realpath + Windows normcase",
+          "breaks_if": "매니저·CLI가 계산한 kernel_id와 어긋나 커널을 못 찾음"
+        },
+        {
+          "name": "GROUP",
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/discovery.rs:30",
+          "what": "Python 디스커버리 상수의 Rust 사본",
+          "breaks_if": "한쪽만 바꾸면 매니저가 실행 중 커널을 못 찾음"
+        },
+        {
+          "name": "RUN_STATUSES",
+          "at": "darkpyonix/kernel/_model.py:10",
+          "what": "실행 상태 이름 (queued~crashed)",
+          "breaks_if": "OpenAPI RunSummary, CLI 종료 코드 매핑이 어긋남"
+        },
+        {
+          "name": "in_kernel",
+          "at": "darkpyonix/kernel/_hostctx.py:16",
+          "what": "실행기 ↔ 런타임 API 다리",
+          "breaks_if": "markdown·params·display가 커널 안에서 plain python처럼 동작"
+        }
       ],
       "problems": [
-        { "symptom": "커널이 떠 있는데 매니저가 못 찾음", "check": "darkpyonix/kernel/_protocol.py:24" },
-        { "symptom": "Windows에서만 제어 채널 접속 거부", "check": "darkpyonix/kernel/_winpipe.py:32" },
-        { "symptom": "같은 파일에 커널이 두 개 뜸 / 둘째가 바로 종료(코드 3)", "check": "darkpyonix/kernel/_lock.py:19" }
+        {
+          "symptom": "커널이 떠 있는데 매니저가 못 찾음",
+          "check": "darkpyonix/kernel/_protocol.py:24"
+        },
+        {
+          "symptom": "Windows에서만 제어 채널 접속 거부",
+          "check": "darkpyonix/kernel/_winpipe.py:32"
+        },
+        {
+          "symptom": "같은 파일에 커널이 두 개 뜸 / 둘째가 바로 종료(코드 3)",
+          "check": "darkpyonix/kernel/_lock.py:19"
+        }
       ],
       "cautions": [
         "Python 3.8 + 표준 라이브러리만 (하드 제약). tests/test_nfr_k2_stdlib_only.py가 검사",
@@ -156,33 +781,1295 @@
       "id": "hub.db",
       "name": "허브 DB 스키마",
       "path": "darkpyonix/hub/worker/migrations",
-      "status": "draft",
-      "one_line": "허브 D1 테이블 마이그레이션 (0001~0011)"
+      "status": "carded",
+      "one_line": "허브 D1 테이블 마이그레이션 (0001~0011)",
+      "entry_points": [
+        {
+          "at": "darkpyonix/hub/worker/migrations/0001_init.sql",
+          "what": "기본 테이블 (accounts, devices, records, shares …)"
+        },
+        {
+          "at": "darkpyonix/hub/worker/migrations/0007_notebooks.sql",
+          "what": "노트북 게시 테이블"
+        },
+        {
+          "at": "darkpyonix/hub/worker/migrations/0011_records_version.sql",
+          "what": "watch 롱폴용 records_version (최신)"
+        }
+      ],
+      "contracts": [
+        {
+          "at": "darkpyonix/hub/worker/migrations/0005_devices_version.sql",
+          "what": "accounts.devices_version",
+          "breaks_if": "GET /devices 롱폴·ETag"
+        },
+        {
+          "at": "darkpyonix/hub/worker/migrations/0006_one_main_server.sql",
+          "what": "계정당 main server 1개",
+          "breaks_if": "기기 연결 시 main server 교체 흐름"
+        },
+        {
+          "at": "darkpyonix/hub/worker/migrations/0010_drop_relay_passes.sql",
+          "what": "relay_passes 삭제 (D23)",
+          "breaks_if": "옛 공유 해석 코드가 남아 있으면 쿼리 실패"
+        }
+      ],
+      "problems": [
+        {
+          "symptom": "배포 후 허브가 no such column 오류",
+          "check": "darkpyonix/hub/worker/migrations/0011_records_version.sql"
+        }
+      ],
+      "cautions": [
+        "기존 마이그레이션 파일은 고치지 말고 새 00NN 파일 추가",
+        "원격 적용은 npm run migrate:remote. 테스트는 test/apply-migrations.ts가 전부 적용"
+      ]
     },
     {
       "id": "tests",
       "name": "테스트",
-      "path": ["tests", "darkpyonix/manager/crates/darkpyonix/tests", "darkpyonix/manager/crates/dpx-kernel/tests", "darkpyonix/manager/crates/dpx-server/tests", "darkpyonix/hub/worker/test"],
-      "status": "draft",
-      "one_line": "SPEC ID 이름의 Python·Rust·허브 테스트"
+      "path": [
+        "tests",
+        "darkpyonix/manager/crates/darkpyonix/tests",
+        "darkpyonix/manager/crates/dpx-kernel/tests",
+        "darkpyonix/manager/crates/dpx-server/tests",
+        "darkpyonix/hub/worker/test"
+      ],
+      "status": "carded",
+      "one_line": "SPEC ID 이름의 Python·Rust·허브 테스트",
+      "entry_points": [
+        {
+          "name": "_link_package",
+          "at": "tests/conftest.py:24",
+          "what": "darkpyonix/kernel을 .scratch/src/darkpyonix로 링크"
+        },
+        {
+          "name": "find_pythons",
+          "at": "tests/conftest.py:62",
+          "what": "머신의 모든 Python으로 커널 테스트 (NFR-K1)"
+        },
+        {
+          "at": "darkpyonix/manager/crates/dpx-server/tests/api.rs",
+          "what": "매니저 HTTP API 테스트"
+        },
+        {
+          "at": "darkpyonix/hub/worker/test/devices.test.ts",
+          "what": "허브 기기 연결·목록 테스트"
+        }
+      ],
+      "contracts": [
+        {
+          "at": "tests/test_nfr_k2_stdlib_only.py",
+          "what": "커널이 표준 라이브러리만 쓰는지 검사",
+          "breaks_if": "서드파티 import가 들어가면 실패 (하드 제약)"
+        },
+        {
+          "at": "darkpyonix/manager/crates/dpx-server/tests/openapi.rs",
+          "what": "제공 스키마 = OpenAPI 파일",
+          "breaks_if": "엔드포인트 추가 시 yaml을 안 고치면 실패"
+        }
+      ],
+      "problems": [
+        {
+          "symptom": "테스트가 실제 홈 디렉터리에 파일을 만듦",
+          "check": "tests/conftest.py:102"
+        }
+      ],
+      "cautions": [
+        "테스트 이름은 SPEC ID를 따름 (test_fr_k3_…)",
+        "Rust 테스트는 builder 서브에이전트에서만",
+        "산출물은 .scratch/ 안에. DARKPYONIX_HOME으로 홈을 돌림"
+      ]
     },
     {
       "id": "packaging",
       "name": "패키징·CI",
-      "path": ["packaging", ".github/scripts"],
-      "status": "draft",
-      "one_line": "wheel 빌드 훅, 버전·스모크 검사, release 동기화 스크립트"
+      "path": [
+        "packaging",
+        ".github/scripts"
+      ],
+      "status": "carded",
+      "one_line": "wheel 빌드 훅, 버전·스모크 검사, release 동기화 스크립트",
+      "entry_points": [
+        {
+          "name": "CustomBuildHook",
+          "at": "packaging/hatch_build.py:25",
+          "what": "Rust 바이너리를 넣은 플랫폼 wheel 빌드"
+        },
+        {
+          "at": "packaging/check_versions.py",
+          "what": "__init__.py와 Cargo.toml 버전 일치 검사"
+        },
+        {
+          "name": "main",
+          "at": "packaging/smoke.py:119",
+          "what": "venv 설치 후 FR-C3 수용 기준 확인"
+        },
+        {
+          "at": ".github/scripts/release/sync-release.sh",
+          "what": "develop → release 동기화"
+        }
+      ],
+      "contracts": [
+        {
+          "name": "FALLBACK_SCRIPT",
+          "at": "packaging/hatch_build.py:22",
+          "what": "바이너리 없을 때 범용 wheel 대체 스크립트",
+          "breaks_if": "지원 안 되는 플랫폼 설치 동작"
+        }
+      ],
+      "problems": [
+        {
+          "symptom": "버전을 올렸는데 CI 버전 검사 실패",
+          "check": "packaging/check_versions.py"
+        },
+        {
+          "symptom": "pip install 후 darkpyonix 명령이 '지원 안 됨'",
+          "check": "packaging/hatch_build.py:22"
+        }
+      ],
+      "cautions": [
+        "check_versions는 hub/worker/package.json을 안 봄 → 허브 0.3.0 잔류"
+      ]
     },
     {
       "id": "docs",
       "name": "문서 사이트",
       "path": "docs",
-      "status": "draft",
-      "one_line": "가이드 사이트(ko/en), OpenAPI 뷰어, 포맷 예제"
+      "status": "carded",
+      "one_line": "가이드 사이트(ko/en), OpenAPI 뷰어, 포맷 예제",
+      "entry_points": [
+        {
+          "at": "docs/SPEC.md",
+          "what": "요구사항(FR/NFR/PR)과 수용 기준. 정본"
+        },
+        {
+          "at": "docs/api/manager.openapi.yaml",
+          "what": "매니저 HTTP API 정본"
+        },
+        {
+          "at": "docs/api/hub.openapi.yaml",
+          "what": "허브 API 정본"
+        },
+        {
+          "at": "docs/guide/index.html",
+          "what": "가이드 사이트 (ko/en, Pages)"
+        }
+      ],
+      "contracts": [
+        {
+          "at": "docs/PROTOCOL.md",
+          "what": "커널 와이어 프로토콜",
+          "breaks_if": "커널과 매니저 양쪽 구현의 기준"
+        },
+        {
+          "at": "docs/FORMAT.md",
+          "what": ".py 노트북 포맷",
+          "breaks_if": "format 파서, 런타임 API"
+        }
+      ],
+      "problems": [],
+      "cautions": [
+        "프로젝트 문서는 한국어, 코드·OpenAPI 설명은 영어 (AGENTS.md)",
+        "docs/설계초안은 노션 원본 (vibemap 추출 제외)"
+      ]
     }
   ],
-  "symptoms": [],
-  "flows": [],
-  "issues": [],
-  "names": []
+  "symptoms": [
+    {
+      "id": "S1",
+      "category": "실행",
+      "symptom": "커널이 도는데 stop/status가 'no kernel is running'",
+      "keywords": [
+        "no kernel is running for",
+        "not_found",
+        "Windows",
+        "kernel_id"
+      ],
+      "modules": [
+        "cli",
+        "kernel.base",
+        "manager.kernel"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:189",
+          "why": "CLI는 canonicalize+자체 해시로 kernel_id 계산",
+          "name": "resolve_file"
+        },
+        {
+          "at": "darkpyonix/kernel/_protocol.py:75",
+          "why": "커널 규칙: realpath + Windows normcase",
+          "name": "canonical_path"
+        },
+        {
+          "at": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:110",
+          "why": "not_found를 이 문구로 바꿔 출력",
+          "name": "no kernel is running"
+        }
+      ],
+      "steps": [
+        "darkpyonix ps의 kernel id와 파일 경로 비교",
+        "Windows인지, 경로 대소문자·\\\\?\\ 접두가 다른지"
+      ]
+    },
+    {
+      "id": "S2",
+      "category": "실행",
+      "symptom": "darkpyonix run이 바로 끝나고 종료 코드 75",
+      "keywords": [
+        "busy",
+        "a run is in progress",
+        "75",
+        "EX_TEMPFAIL",
+        "--queue"
+      ],
+      "modules": [
+        "cli",
+        "kernel.exec"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:300",
+          "why": "busy 오류면 현재 run 안내 후 75",
+          "name": "busy"
+        },
+        {
+          "at": "darkpyonix/kernel/_executor.py:136",
+          "why": "이미 실행 중이면 busy",
+          "name": "a run is in progress"
+        }
+      ],
+      "steps": [
+        "다른 터미널·IDE에서 같은 파일을 실행 중인지",
+        "기다리려면 --queue"
+      ]
+    },
+    {
+      "id": "S3",
+      "category": "실행",
+      "symptom": "Ctrl-C를 눌러도 셀이 안 멈춤 / 터미널만 빠져나옴",
+      "keywords": [
+        "Ctrl-C",
+        "KeyboardInterrupt",
+        "interrupt",
+        "detach",
+        "130"
+      ],
+      "modules": [
+        "cli",
+        "kernel.exec"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:397",
+          "why": "첫 Ctrl-C=interrupt, 둘째=분리",
+          "name": "CtrlC"
+        },
+        {
+          "at": "darkpyonix/kernel/_executor.py:219",
+          "why": "커널이 KeyboardInterrupt를 넣는 곳",
+          "name": "interrupt"
+        }
+      ],
+      "steps": [
+        "사용자 코드가 KeyboardInterrupt를 삼키는지(except: pass)",
+        "C 확장 안에서 오래 걸리는 중인지"
+      ]
+    },
+    {
+      "id": "S4",
+      "category": "실행",
+      "symptom": "run 했는데 커널 기동 시간 초과",
+      "keywords": [
+        "start_timeout",
+        "504",
+        "announce",
+        "DARKPYONIX_PYTHON"
+      ],
+      "modules": [
+        "manager.kernel",
+        "kernel.process"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/lib.rs:34",
+          "why": "announce 대기 10초",
+          "name": "START_TIMEOUT"
+        },
+        {
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/launch.rs:95",
+          "why": "어느 python을 쓰는지",
+          "name": "resolve_python"
+        },
+        {
+          "at": "darkpyonix/kernel/__main__.py:252",
+          "why": "커널 진입. 파일 없으면 exit 2",
+          "name": "main"
+        }
+      ],
+      "steps": [
+        "~/.darkpyonix/manager.log 확인",
+        "python -m darkpyonix --file <파일>을 직접 실행해 오류 보기"
+      ]
+    },
+    {
+      "id": "S5",
+      "category": "실행",
+      "symptom": "같은 파일 커널이 이미 있다며 새 커널이 바로 종료(코드 3)",
+      "keywords": [
+        "EXIT_ALREADY_RUNNING",
+        "lock",
+        "already running",
+        "exit 3"
+      ],
+      "modules": [
+        "kernel.process",
+        "kernel.base"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/kernel/__main__.py:196",
+          "why": "잠금 실패 시 기존 커널 정보 출력 후 3",
+          "name": "EXIT_ALREADY_RUNNING"
+        },
+        {
+          "at": "darkpyonix/kernel/_lock.py:19",
+          "why": "파일당 커널 하나 OS 잠금",
+          "name": "FileLock"
+        }
+      ],
+      "steps": [
+        "darkpyonix ps로 기존 커널 확인",
+        "~/.darkpyonix/locks 아래 잠금 파일"
+      ]
+    },
+    {
+      "id": "S6",
+      "category": "출력",
+      "symptom": "셀 출력이 늦게 나오거나 순서가 뒤섞임",
+      "keywords": [
+        "output",
+        "stdout",
+        "flush",
+        "print"
+      ],
+      "modules": [
+        "kernel.exec"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/kernel/_capture.py:142",
+          "why": "출력 합치기·순서가 모인 루프",
+          "name": "_loop"
+        },
+        {
+          "at": "darkpyonix/kernel/_capture.py:132",
+          "why": "큐를 비울 때까지 블록",
+          "name": "flush"
+        }
+      ],
+      "steps": [
+        "서브프로세스 출력이면 run_command를 썼는지",
+        "Windows/POSIX 중 어디서만 그런지"
+      ]
+    },
+    {
+      "id": "S7",
+      "category": "출력",
+      "symptom": "큰 출력이 기록에서 잘리고 .log 파일이 생김",
+      "keywords": [
+        "DARKPYONIX_RUN_OUTPUT_LIMIT",
+        "sidecar",
+        ".log",
+        "16 MiB"
+      ],
+      "modules": [
+        "kernel.exec"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/kernel/_runs.py:45",
+          "why": "스트림 한도 16 MiB (FR-R5)",
+          "name": "DEFAULT_OUTPUT_LIMIT"
+        },
+        {
+          "at": "darkpyonix/kernel/_runs.py:46",
+          "why": "한도 환경 변수",
+          "name": "OUTPUT_LIMIT_ENV"
+        }
+      ],
+      "steps": [
+        "__runs__/<파일>/ 아래 <run_id>.cell<i>.log 확인"
+      ]
+    },
+    {
+      "id": "S8",
+      "category": "출력",
+      "symptom": "plt.show() 그림이 노트북에 안 나옴",
+      "keywords": [
+        "matplotlib",
+        "pyplot",
+        "figure",
+        "MPLBACKEND"
+      ],
+      "modules": [
+        "kernel.runtime"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/kernel/_figures.py:34",
+          "why": "pyplot import 시 백엔드 지정 훅",
+          "name": "_PyplotHook"
+        },
+        {
+          "at": "darkpyonix/kernel/_mplbackend.py:39",
+          "why": "그림을 display로 내보냄",
+          "name": "flush_figures"
+        }
+      ],
+      "steps": [
+        "MPLBACKEND 환경 변수가 덮어쓰는지",
+        "pyplot을 커널 시작 전에 import했는지"
+      ]
+    },
+    {
+      "id": "S9",
+      "category": "노트북 파일",
+      "symptom": "셀이 안 나뉘거나 셀 타입이 다르게 인식됨",
+      "keywords": [
+        "# %%",
+        "marker",
+        "cell type",
+        "[markdown]"
+      ],
+      "modules": [
+        "kernel.runtime"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/kernel/format/_parser.py:25",
+          "why": "# %% 제목 [타입] 마커 정규식",
+          "name": "MARKER_RE"
+        },
+        {
+          "at": "darkpyonix/kernel/format/__init__.py:19",
+          "why": "알려진 셀 타입",
+          "name": "KNOWN_TYPES"
+        }
+      ],
+      "steps": [
+        "docs/FORMAT.md의 마커 형식과 비교",
+        "줄 앞 공백·탭이 있는지"
+      ]
+    },
+    {
+      "id": "S10",
+      "category": "노트북 파일",
+      "symptom": "예전 실행 결과가 셀에 안 붙음",
+      "keywords": [
+        "source_sha256",
+        "__runs__",
+        "document",
+        "match"
+      ],
+      "modules": [
+        "kernel.runtime",
+        "kernel.exec"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/kernel/format/_parser.py:60",
+          "why": "셀 본문 해시 규칙",
+          "name": "source_sha256"
+        },
+        {
+          "at": "darkpyonix/kernel/_document.py:42",
+          "why": "id → 해시 → 순서로 실행 결과 매칭",
+          "name": "_map_run"
+        }
+      ],
+      "steps": [
+        "셀 내용을 고친 뒤인지 (해시가 바뀌면 매칭 안 됨)"
+      ]
+    },
+    {
+      "id": "S11",
+      "category": "권한",
+      "symptom": "토큰을 넣었는데 401 또는 403",
+      "keywords": [
+        "401",
+        "403",
+        "unauthorized",
+        "capability",
+        "required",
+        "token"
+      ],
+      "modules": [
+        "manager.server",
+        "kernel.collab"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/manager/crates/dpx-server/src/lib.rs:290",
+          "why": "라우팅 전 인증",
+          "name": "auth_gate"
+        },
+        {
+          "at": "darkpyonix/manager/crates/dpx-server/src/api.rs:150",
+          "why": "capability X required",
+          "name": "capability"
+        },
+        {
+          "at": "darkpyonix/kernel/_tokens.py:54",
+          "why": "커널 토큰 검증",
+          "name": "TokenStore"
+        }
+      ],
+      "steps": [
+        "토큰이 마스터인지 커널 하나에 묶인 토큰인지",
+        "이벤트·WS면 ?token= 쿼리로 보냈는지"
+      ]
+    },
+    {
+      "id": "S12",
+      "category": "공동 편집",
+      "symptom": "셀 편집이 409로 거부됨",
+      "keywords": [
+        "409",
+        "conflict",
+        "locked",
+        "is locked by",
+        "version"
+      ],
+      "modules": [
+        "kernel.collab",
+        "manager.server"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/kernel/_collab.py:382",
+          "why": "다른 사람이 잠근 셀",
+          "name": "is locked by"
+        },
+        {
+          "at": "darkpyonix/kernel/_collab.py:507",
+          "why": "base_version이 맞지 않음",
+          "name": "not %d"
+        },
+        {
+          "at": "darkpyonix/manager/crates/dpx-server/src/error.rs:78",
+          "why": "busy/conflict/locked → 409",
+          "name": "CONFLICT"
+        }
+      ],
+      "steps": [
+        "응답 data.locked_by / data.cell 확인",
+        "최신 스냅샷을 다시 받았는지"
+      ]
+    },
+    {
+      "id": "S13",
+      "category": "공동 편집",
+      "symptom": "브라우저 이벤트·WebSocket이 끊기거나 안 옴",
+      "keywords": [
+        "SSE",
+        "events",
+        "WebSocket",
+        "handoff",
+        "keepalive"
+      ],
+      "modules": [
+        "manager.server",
+        "kernel.collab"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/manager/crates/dpx-server/src/handoff.rs:142",
+          "why": "TLS 등 인계 불가 시 매니저가 중계",
+          "name": "pump_response"
+        },
+        {
+          "at": "darkpyonix/kernel/_streams.py:138",
+          "why": "커널이 인계받은 연결에 응답",
+          "name": "adopt"
+        },
+        {
+          "at": "darkpyonix/kernel/_wsync.py:24",
+          "why": "WS 무응답 60초면 닫음",
+          "name": "IDLE_TIMEOUT"
+        }
+      ],
+      "steps": [
+        "개발자도구 Network에서 연결 상태·마지막 이벤트",
+        "TLS 매니저인지(인계 대신 중계)"
+      ]
+    },
+    {
+      "id": "S14",
+      "category": "허브",
+      "symptom": "기기가 켜져 있는데 허브에서 offline으로 보임",
+      "keywords": [
+        "online",
+        "offline",
+        "last_seen",
+        "pkarr"
+      ],
+      "modules": [
+        "hub"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/hub/worker/src/devices.ts:132",
+          "why": "15분 넘게 주소 게시가 없으면 offline",
+          "name": "ONLINE_WINDOW_SECS"
+        },
+        {
+          "at": "darkpyonix/hub/worker/src/devices.ts:138",
+          "why": "offline으로 내리는 곳",
+          "name": "expireOnline"
+        },
+        {
+          "at": "darkpyonix/hub/worker/src/directory.ts:43",
+          "why": "옛 패킷은 거부되어 online이 안 됨",
+          "name": "not newer"
+        }
+      ],
+      "steps": [
+        "기기가 PUT /pkarr/{key}를 주기적으로 보내는지",
+        "응답이 409(not newer)인지"
+      ]
+    },
+    {
+      "id": "S15",
+      "category": "허브",
+      "symptom": "기기 연결 코드가 '만료됐거나 모르는 코드'",
+      "keywords": [
+        "unknown or expired code",
+        "device-links",
+        "link code",
+        "approve"
+      ],
+      "modules": [
+        "hub"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/hub/worker/src/devices.ts:258",
+          "why": "코드 조회 실패",
+          "name": "unknown or expired code"
+        },
+        {
+          "at": "darkpyonix/hub/worker/src/devices.ts:40",
+          "why": "승인 유효 시간 15분",
+          "name": "LINK_TTL_SECS"
+        }
+      ],
+      "steps": [
+        "코드를 받은 지 15분이 지났는지",
+        "이미 승인·수령된 코드인지"
+      ]
+    },
+    {
+      "id": "S16",
+      "category": "허브",
+      "symptom": "GitHub 로그인 후 '계정을 만들 수 없음'",
+      "keywords": [
+        "may not create an account",
+        "GITHUB_ALLOWED_IDS",
+        "OAuth"
+      ],
+      "modules": [
+        "hub"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/hub/worker/src/github.ts:144",
+          "why": "허용 목록에 없는 GitHub 사용자",
+          "name": "allowed"
+        },
+        {
+          "at": "darkpyonix/hub/worker/src/github.ts:128",
+          "why": "GITHUB_ALLOWED_IDS 해석",
+          "name": "allowed"
+        }
+      ],
+      "steps": [
+        "wrangler.toml GITHUB_ALLOWED_IDS 값"
+      ]
+    },
+    {
+      "id": "S17",
+      "category": "허브",
+      "symptom": "허브 API가 429 too many requests",
+      "keywords": [
+        "429",
+        "too many",
+        "watching too often",
+        "rate limit"
+      ],
+      "modules": [
+        "hub"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/hub/worker/src/directory.ts:190",
+          "why": "pkarr watch 분당 6회",
+          "name": "watching too often"
+        },
+        {
+          "at": "darkpyonix/hub/worker/src/notebooks.ts:37",
+          "why": "노트북 업로드·생성·읽기 한도",
+          "name": "tooMany"
+        }
+      ],
+      "steps": [
+        "wrangler.toml [[ratelimits]] 값",
+        "클라이언트가 롱폴을 너무 자주 다시 거는지"
+      ]
+    },
+    {
+      "id": "S18",
+      "category": "허브",
+      "symptom": "공유 링크를 열면 노트북 커널에 연결이 안 됨",
+      "keywords": [
+        "share",
+        "/s/",
+        "relay",
+        "share_id"
+      ],
+      "modules": [
+        "hub"
+      ],
+      "look": [
+        {
+          "at": "darkpyonix/hub/worker/src/shares.ts:46",
+          "why": "공유 해석은 share_id·endpoint_id만 줌",
+          "name": "resolveShare"
+        },
+        {
+          "at": "darkpyonix/hub/worker/src/shares.ts:76",
+          "why": "/s/{id} 페이지",
+          "name": "sharePage"
+        }
+      ],
+      "steps": [
+        "허브 릴레이는 D23으로 삭제됨. 브라우저 연결 경로는 PROJECT Q19에서 미정"
+      ]
+    }
+  ],
+  "flows": [
+    {
+      "id": "F1",
+      "name": "darkpyonix run FILE",
+      "desc": "CLI가 매니저를 찾거나 띄우고, 커널에서 실행하며 출력을 따라감",
+      "steps": [
+        {
+          "module": "cli",
+          "at": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:89",
+          "what": "명령 분기",
+          "name": "dispatch_inner"
+        },
+        {
+          "module": "cli",
+          "at": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:114",
+          "what": "매니저 없으면 임시 매니저 기동",
+          "name": "spawn_ephemeral"
+        },
+        {
+          "module": "cli",
+          "at": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:243",
+          "what": "POST /api/kernels (있으면 200, 새로 띄우면 201)",
+          "name": "ensure_kernel"
+        },
+        {
+          "module": "manager.server",
+          "at": "darkpyonix/manager/crates/dpx-server/src/api.rs:728",
+          "what": "POST .../runs → 능력 검사 → DKP run",
+          "name": "start_run"
+        },
+        {
+          "module": "kernel.exec",
+          "at": "darkpyonix/kernel/_executor.py:128",
+          "what": "실행 요청을 큐에 넣음",
+          "name": "submit"
+        },
+        {
+          "module": "cli",
+          "at": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:438",
+          "what": "SSE 이벤트를 따라가며 출력, 종료 코드",
+          "name": "follow"
+        }
+      ]
+    },
+    {
+      "id": "F2",
+      "name": "커널 기동과 발견",
+      "desc": "매니저가 커널을 띄우고 멀티캐스트로 찾아 DKP로 연결",
+      "steps": [
+        {
+          "module": "manager.kernel",
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/launch.rs:32",
+          "what": "내장 Python 패키지를 홈에 한 번 풀기",
+          "name": "extract_runtime"
+        },
+        {
+          "module": "manager.kernel",
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/launch.rs:135",
+          "what": "부트스트랩으로 커널 분리 기동",
+          "name": "spawn_kernel"
+        },
+        {
+          "module": "kernel.process",
+          "at": "darkpyonix/kernel/__main__.py:45",
+          "what": "잠금 → 문서·토큰·실행기·제어 서버",
+          "name": "Kernel"
+        },
+        {
+          "module": "kernel.process",
+          "at": "darkpyonix/kernel/_discovery.py:97",
+          "what": "루프백 멀티캐스트로 announce",
+          "name": "DiscoveryResponder"
+        },
+        {
+          "module": "manager.kernel",
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/discovery.rs:46",
+          "what": "announce 캐시",
+          "name": "Discovery"
+        },
+        {
+          "module": "manager.kernel",
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/dkp.rs:106",
+          "what": "같은 OS 계정인지 확인 후 DKP 연결",
+          "name": "require_same_account"
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "name": "공동 편집: 셀 수정",
+      "desc": "ember/ash가 셀을 고치면 커널이 검사·방송·저장",
+      "steps": [
+        {
+          "module": "manager.server",
+          "at": "darkpyonix/manager/crates/dpx-server/src/api.rs:1512",
+          "what": "PATCH .../cells/{id}, Edit 능력",
+          "name": "update_cell"
+        },
+        {
+          "module": "kernel.collab",
+          "at": "darkpyonix/kernel/_collab.py:499",
+          "what": "잠금·버전 검사 후 적용",
+          "name": "cell_update"
+        },
+        {
+          "module": "kernel.collab",
+          "at": "darkpyonix/kernel/_streams.py:124",
+          "what": "doc.cell.updated를 연결된 참여자에게",
+          "name": "StreamHub"
+        },
+        {
+          "module": "kernel.collab",
+          "at": "darkpyonix/kernel/_collab.py:253",
+          "what": "디바운스 후 파일 저장",
+          "name": "tick"
+        }
+      ]
+    },
+    {
+      "id": "F4",
+      "name": "긴 스트림 인계",
+      "desc": "매니저가 인증만 하고 소켓을 커널에 넘겨 커널이 직접 응답",
+      "steps": [
+        {
+          "module": "manager.server",
+          "at": "darkpyonix/manager/crates/dpx-server/src/handoff.rs:45",
+          "what": "요청 머리 엿보기",
+          "name": "parse_head"
+        },
+        {
+          "module": "manager.server",
+          "at": "darkpyonix/manager/crates/dpx-server/src/api.rs:1903",
+          "what": "인증·인가 후 인계 여부 결정",
+          "name": "plan_handoff"
+        },
+        {
+          "module": "manager.kernel",
+          "at": "darkpyonix/manager/crates/dpx-kernel/src/dkp.rs:746",
+          "what": "fd 전달(POSIX) / Windows는 :806",
+          "name": "adopt"
+        },
+        {
+          "module": "kernel.collab",
+          "at": "darkpyonix/kernel/_streams.py:138",
+          "what": "커널이 HTTP 응답",
+          "name": "adopt"
+        }
+      ]
+    },
+    {
+      "id": "F5",
+      "name": "허브 기기 연결과 주소 게시",
+      "desc": "기기가 계정에 들어오고 주소를 게시, 다른 기기가 watch로 받음",
+      "steps": [
+        {
+          "module": "hub",
+          "at": "darkpyonix/hub/worker/src/devices.ts:187",
+          "what": "POST /device-links → user_code",
+          "name": "createLink"
+        },
+        {
+          "module": "hub",
+          "at": "darkpyonix/hub/worker/src/devices.ts:285",
+          "what": "사람이 브라우저에서 승인",
+          "name": "decideLinkCode"
+        },
+        {
+          "module": "hub",
+          "at": "darkpyonix/hub/worker/src/devices.ts:358",
+          "what": "기기가 서명으로 토큰 수령",
+          "name": "claimLink"
+        },
+        {
+          "module": "hub",
+          "at": "darkpyonix/hub/worker/src/directory.ts:16",
+          "what": "PUT /pkarr/{key}: 게시, online=1",
+          "name": "pkarrPut"
+        },
+        {
+          "module": "hub",
+          "at": "darkpyonix/hub/worker/src/directory.ts:184",
+          "what": "다른 기기가 GET /pkarr/watch로 대기",
+          "name": "pkarrWatch"
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "id": "I1",
+      "severity": "mid",
+      "type": "불일치",
+      "at": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:189",
+      "what": "CLI가 canonicalize+자체 해시로 kernel_id 계산. Windows에서 커널 id와 어긋날 수 있음",
+      "fix": "dpx_kernel::ident::kernel_id_for로 교체. Windows CLI 테스트로 먼저 재현"
+    },
+    {
+      "id": "I2",
+      "severity": "mid",
+      "type": "중복",
+      "at": "darkpyonix/kernel/_protocol.py:24",
+      "what": "디스커버리 주소·포트·타임아웃·프레임 한도가 Python과 Rust에 각각 정의",
+      "fix": "바꿀 때 양쪽 동시 수정. 값 일치 테스트 추가 검토"
+    },
+    {
+      "id": "I3",
+      "severity": "mid",
+      "type": "중복",
+      "at": "darkpyonix/manager/crates/dpx-server/src/auth.rs:87",
+      "what": "능력 이름 5개가 4곳에 정의 (auth.rs, _collab, _tokens, _streams)",
+      "fix": "Python 3곳은 _protocol.py로 모으기"
+    },
+    {
+      "id": "I4",
+      "severity": "mid",
+      "type": "불일치",
+      "at": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:19",
+      "what": "CLI는 DARKPYONIX_TOKEN, 매니저는 DARKPYONIX_MANAGER_TOKEN을 읽음",
+      "fix": "의도라면 README/SPEC에 명시, 아니면 통일"
+    },
+    {
+      "id": "I5",
+      "severity": "mid",
+      "type": "거대 파일",
+      "at": "darkpyonix/manager/crates/dpx-server/src/api.rs",
+      "what": "모든 매니저 엔드포인트가 한 파일(약 2천 줄)",
+      "fix": "kernels/runs/collab/auth/shares로 모듈 분할 검토"
+    },
+    {
+      "id": "I6",
+      "severity": "mid",
+      "type": "거대 함수",
+      "at": "darkpyonix/manager/crates/darkpyonix/src/commands.rs:89",
+      "what": "dispatch_inner 약 150줄. _capture._loop, pump_response도 100줄 넘음",
+      "fix": "수정 시 회귀 테스트 필수. 명령별 함수로 분리 검토"
+    },
+    {
+      "id": "I7",
+      "severity": "low",
+      "type": "중복",
+      "at": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:31",
+      "what": "Rust 안에 홈 경로 함수 3개 (CLI, dpx-server, dpx-kernel)",
+      "fix": "dpx-kernel::home::default_home 하나로"
+    },
+    {
+      "id": "I8",
+      "severity": "low",
+      "type": "중복",
+      "at": "darkpyonix/kernel/__main__.py:34",
+      "what": "FINISHED 튜플이 __main__.py와 _streams.py에 중복",
+      "fix": "_model.py로 이동"
+    },
+    {
+      "id": "I9",
+      "severity": "low",
+      "type": "죽은 코드",
+      "at": "darkpyonix/kernel/_home.py:98",
+      "what": "managers_dir 호출처 0건",
+      "fix": "제거 또는 사용처 확인"
+    },
+    {
+      "id": "I10",
+      "severity": "low",
+      "type": "죽은 코드 후보",
+      "at": "darkpyonix/kernel/_client.py",
+      "what": "헤더는 CLI·매니저가 쓴다지만 프로덕션 import 0, 테스트만 사용",
+      "fix": "헤더 수정 또는 tests/helpers로 이동 검토"
+    },
+    {
+      "id": "I11",
+      "severity": "low",
+      "type": "미구현",
+      "at": "darkpyonix/manager/crates/dpx-server/src/tls.rs:22",
+      "what": "ACME TlsConfig 변형은 TODO, serve가 거부",
+      "fix": "SPEC 상태 확인, 미구현 명시 유지"
+    },
+    {
+      "id": "I12",
+      "severity": "low",
+      "type": "미구현",
+      "at": "darkpyonix/kernel/_misc.py:55",
+      "what": "run_cinterop 등 3개는 공개 export지만 호출하면 NotImplementedError",
+      "fix": "의도된 예약(issue #5). 문서에 v1 미지원 명시 유지"
+    },
+    {
+      "id": "I13",
+      "severity": "low",
+      "type": "불일치",
+      "at": "darkpyonix/manager/crates/dpx-server/src/error.rs:10",
+      "what": "오류 JSON이 매니저 {error:{code,message}}, 허브 {error, code?}로 다름",
+      "fix": "클라이언트가 둘 다 처리하는지 확인, 의도면 문서화"
+    },
+    {
+      "id": "I14",
+      "severity": "low",
+      "type": "불일치",
+      "at": "darkpyonix/hub/worker/src/app.ts:30",
+      "what": "0.3.1 버전 올림에서 허브 VERSION·package.json은 0.3.0으로 남음",
+      "fix": "허브 버전 정책을 정하고, 같이 간다면 check_versions.py에 추가"
+    },
+    {
+      "id": "I15",
+      "severity": "low",
+      "type": "하드코딩",
+      "at": "darkpyonix/hub/worker/src/notebooks.ts:9",
+      "what": "노트북 한도가 모두 provisional",
+      "fix": "실사용 후 조정. 이 객체에서만 바꿀 것"
+    },
+    {
+      "id": "I16",
+      "severity": "low",
+      "type": "외부 의존",
+      "at": "darkpyonix/manager/crates/dpx-server/src/proxy.rs:14",
+      "what": "hyper_util의 legacy 클라이언트 사용",
+      "fix": "hyper-util 업그레이드 시 확인"
+    }
+  ],
+  "names": [
+    {
+      "name": "kernel_id",
+      "kind": "식별자",
+      "module": "kernel.base",
+      "at": "darkpyonix/kernel/_protocol.py:83",
+      "meaning": "파일 하나의 커널 id: k_ + SHA-256 앞 20자리",
+      "caution": "Rust 사본 2개(ident.rs, CLI discovery.rs). CLI는 정규화 방식이 다름"
+    },
+    {
+      "name": "DISCOVERY_PORT",
+      "kind": "상수",
+      "module": "kernel.base",
+      "at": "darkpyonix/kernel/_protocol.py:25",
+      "meaning": "루프백 멀티캐스트 239.255.68.80:46880",
+      "caution": "Rust discovery.rs와 같이 바꿀 것"
+    },
+    {
+      "name": "MAX_FRAME",
+      "kind": "상수",
+      "module": "kernel.base",
+      "at": "darkpyonix/kernel/_protocol.py:32",
+      "meaning": "DKP 프레임 최대 64 MiB",
+      "caution": "Rust dkp.rs 사본"
+    },
+    {
+      "name": "EXIT_ALREADY_RUNNING",
+      "kind": "종료 코드",
+      "module": "kernel.process",
+      "at": "darkpyonix/kernel/_protocol.py:41",
+      "meaning": "같은 파일 커널이 이미 있으면 3"
+    },
+    {
+      "name": "KERNEL_STATUSES",
+      "kind": "상태값",
+      "module": "kernel.base",
+      "at": "darkpyonix/kernel/_protocol.py:49",
+      "meaning": "starting, idle, busy, stopping"
+    },
+    {
+      "name": "RUN_STATUSES",
+      "kind": "상태값",
+      "module": "kernel.base",
+      "at": "darkpyonix/kernel/_model.py:10",
+      "meaning": "queued, running, ok, error, interrupted, cancelled, crashed",
+      "caution": "종료 상태 FINISHED가 __main__.py, _streams.py에 중복"
+    },
+    {
+      "name": "ERROR_CODES",
+      "kind": "오류 코드",
+      "module": "kernel.base",
+      "at": "darkpyonix/kernel/_protocol.py:43",
+      "meaning": "DKP 오류 코드 목록",
+      "caution": "HTTP 매핑이 매니저 error.rs와 커널 _streams.py 두 곳"
+    },
+    {
+      "name": "CAPABILITIES",
+      "kind": "권한",
+      "module": "manager.server",
+      "at": "darkpyonix/manager/crates/dpx-server/src/auth.rs:87",
+      "meaning": "read, history, execute, edit, manage (정해진 순서)",
+      "caution": "4곳 중복: auth.rs, _collab.py, _tokens.py, _streams.py"
+    },
+    {
+      "name": "DARKPYONIX_HOME",
+      "kind": "환경 변수",
+      "module": "kernel.base",
+      "at": "darkpyonix/kernel/_home.py:16",
+      "meaning": "런타임 홈 (기본 ~/.darkpyonix): locks, sockets, runtime, manager.db",
+      "caution": "Rust 홈 함수 3개(I-004). 테스트는 .scratch로 돌림"
+    },
+    {
+      "name": "DARKPYONIX_PYTHON",
+      "kind": "환경 변수",
+      "module": "manager.kernel",
+      "at": "darkpyonix/manager/crates/dpx-kernel/src/launch.rs:95",
+      "meaning": "커널을 띄울 인터프리터 (요청값 다음 순위)"
+    },
+    {
+      "name": "DARKPYONIX_TOKEN",
+      "kind": "환경 변수",
+      "module": "cli",
+      "at": "darkpyonix/manager/crates/darkpyonix/src/discovery.rs:19",
+      "meaning": "CLI가 붙을 매니저 토큰 (URL은 DARKPYONIX_MANAGER_URL)",
+      "caution": "매니저는 DARKPYONIX_MANAGER_TOKEN을 읽음. 이름 다름(I-007)"
+    },
+    {
+      "name": "DARKPYONIX_MANAGER_TOKEN",
+      "kind": "환경 변수",
+      "module": "cli",
+      "at": "darkpyonix/manager/crates/darkpyonix/src/manager.rs:65",
+      "meaning": "매니저 마스터 토큰을 고정"
+    },
+    {
+      "name": "DARKPYONIX_RUN_OUTPUT_LIMIT",
+      "kind": "환경 변수",
+      "module": "kernel.exec",
+      "at": "darkpyonix/kernel/_runs.py:46",
+      "meaning": "실행 기록 스트림 한도 (기본 16 MiB)"
+    },
+    {
+      "name": "__runs__",
+      "kind": "폴더·객체",
+      "module": "kernel.exec",
+      "at": "darkpyonix/kernel/_runs.py:34",
+      "meaning": "노트북 옆 실행 기록 폴더, 커널 네임스페이스의 매직 객체",
+      "caution": "경로 규칙이 매니저 util.rs에 사본"
+    },
+    {
+      "name": "run_id",
+      "kind": "식별자",
+      "module": "kernel.base",
+      "at": "darkpyonix/kernel/_protocol.py:179",
+      "meaning": "YYYYMMDD-HHMMSS-xxxx (UTC)",
+      "caution": "검증 정규식 2곳: _runs.py, util.rs"
+    },
+    {
+      "name": "on_busy",
+      "kind": "요청 필드",
+      "module": "manager.server",
+      "at": "darkpyonix/manager/crates/dpx-server/src/api.rs:722",
+      "meaning": "실행 중일 때 reject 또는 queue (CLI --queue)"
+    },
+    {
+      "name": "Mode",
+      "kind": "enum",
+      "module": "manager.server",
+      "at": "darkpyonix/manager/crates/dpx-server/src/lib.rs:68",
+      "meaning": "Ephemeral(CLI가 띄움, 유휴 종료) / Dedicated(전용, 공유 가능)"
+    },
+    {
+      "name": "DEFAULT_IDLE_TIMEOUT",
+      "kind": "상수",
+      "module": "manager.server",
+      "at": "darkpyonix/manager/crates/dpx-server/src/lib.rs:56",
+      "meaning": "임시 매니저 유휴 종료 120초"
+    },
+    {
+      "name": "DEFAULT_DEDICATED_PORT",
+      "kind": "상수",
+      "module": "manager.server",
+      "at": "darkpyonix/manager/crates/dpx-server/src/lib.rs:57",
+      "meaning": "전용 매니저 포트 46881"
+    },
+    {
+      "name": "START_TIMEOUT",
+      "kind": "상수",
+      "module": "manager.kernel",
+      "at": "darkpyonix/manager/crates/dpx-kernel/src/lib.rs:34",
+      "meaning": "기동한 커널의 announce 대기 10초"
+    },
+    {
+      "name": "MARKER_RE",
+      "kind": "정규식",
+      "module": "kernel.runtime",
+      "at": "darkpyonix/kernel/format/_parser.py:25",
+      "meaning": "# %% 제목 [타입] 셀 마커"
+    },
+    {
+      "name": "ONLINE_WINDOW_SECS",
+      "kind": "상수",
+      "module": "hub",
+      "at": "darkpyonix/hub/worker/src/devices.ts:132",
+      "meaning": "마지막 주소 게시 후 15분이면 offline (잠정값)"
+    },
+    {
+      "name": "records_version",
+      "kind": "DB 열",
+      "module": "hub.db",
+      "at": "darkpyonix/hub/worker/migrations/0011_records_version.sql",
+      "meaning": "계정 주소 레코드 변경 횟수. watch 롱폴이 이것만 폴링"
+    },
+    {
+      "name": "devices_version",
+      "kind": "DB 열",
+      "module": "hub.db",
+      "at": "darkpyonix/hub/worker/migrations/0005_devices_version.sql",
+      "meaning": "기기 목록 변경 횟수. GET /devices 롱폴·ETag",
+      "caution": "바꾸는 곳마다 bumpDevicesVersion 필요"
+    },
+    {
+      "name": "ROLES",
+      "kind": "상태값",
+      "module": "hub",
+      "at": "darkpyonix/hub/worker/src/devices.ts:98",
+      "meaning": "main_server, computer, client",
+      "caution": "계정당 main_server 1개"
+    },
+    {
+      "name": "LIMITS",
+      "kind": "상수",
+      "module": "hub",
+      "at": "darkpyonix/hub/worker/src/notebooks.ts:9",
+      "meaning": "노트북 크기·개수·저장 한도 (잠정값)",
+      "caution": "한도는 이 객체에서만 바꿈"
+    }
+  ]
 }
